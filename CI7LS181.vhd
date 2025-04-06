@@ -12,13 +12,13 @@ entity CI7LS181 is
     (
         A, B 		: in std_logic_vector(3 downto 0);  -- Operandos de entrada
         OpCode 		: in std_logic_vector(3 downto 0);  -- Código de operación
-        M 			: in std_logic;                     -- Selector: Lógico / Aritmético
+        M 		: in std_logic;                     -- Selector: Lógico / Aritmético
         Cin  		: in std_logic;
-		C4 			: out std_logic;                    -- Acarreo de salida
-		G 			: out std_logic ;
-		P 			: out std_logic ;
-		AB 			: out std_logic ;  
-		F 			: out std_logic_vector(3 downto 0)
+	C4 		: out std_logic;                    -- Acarreo de salida
+	G 		: out std_logic ;
+	P 		: out std_logic ;
+	AB 		: out std_logic ;  
+	F 		: out std_logic_vector(3 downto 0)
 		  
 		--A=B, es una salida de colector abierto e indica cuándo las cuatro salidas está a nivel ALTO. 
 		--Si se selecciona la operación aritmética de la resta es salida se activará cuando ambos operandos sean iguales.   
@@ -51,22 +51,21 @@ architecture ALU of CI7LS181 is
 begin
 	
 	opcodeM <= OpCode & M & Cin;
-	--OUTpin : process(A,B)
-	--begin
-	G0 <= A(0) AND B(0); --generación 0
-	P0 <= A(0)XOR B(0); --propagación 0
-	C0 <= G0 OR (B(0) AND Cin); --look ahead carry 0
+	-- un gran uso de los blocks repetitivos pero se me olvido como declararlos
+	G0 <= A(0) AND B(0); 
+	P0 <= A(0)XOR B(0); 
+	C0 <= G0 OR (B(0) AND Cin); 
 	 
-	G1 <= A(1) AND B(1); --generación 1 
-	P1 <= A(1)XOR B(1); --propagación 1
-	C1 <= G1 OR (B(1) AND C0); --look ahead carry 1
+	G1 <= A(1) AND B(1); 
+	P1 <= A(1)XOR B(1); 
+	C1 <= G1 OR (B(1) AND C0); 
 	
-	G2 <= A(2) AND B(2); --generación 2 
-	P2 <= A(2)XOR B(2); --propagación 2
-	C2 <= G2 OR (B(2) AND C1); --look ahead carry 2
+	G2 <= A(2) AND B(2); 
+	P2 <= A(2)XOR B(2); 
+	C2 <= G2 OR (B(2) AND C1); 
 	
-	G3 <= A(3) AND B(3); --generación 3
-	P3 <= A(3)XOR B(3); --propagación 3
+	G3 <= A(3) AND B(3); 
+	P3 <= A(3)XOR B(3); 
 	C4 <= G3 OR (B(3) AND C2); --look ahead carry 
 	
 	G <= G3 OR (G2 AND P3) OR (G1 AND P3 AND P2) OR (G0 AND P3 AND P2 AND P1 AND P0); --generación
@@ -76,7 +75,7 @@ begin
 	
 	
 	
-	
+	--a=b
 	OUTpin : process(A,B)
 	begin
 			if A=B then
