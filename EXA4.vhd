@@ -1,7 +1,3 @@
-library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
-
 entity EXA2 is
     port
     (  
@@ -29,63 +25,64 @@ begin
 	
 	
     process(clk, Pin,SET, CA)
-		comp :for i in 0 to 3 generate
+	begin
+		comp: for i in 0 to 3 generate
+		
 			if Pin(i) = M1(i) AND SET = '1' then
-			CA = CA + '1';
-			MC = MC + '1';
+			CA <= CA + '1';
+			MC <= MC + '1';
 				if rising_edge(clk) then
 					if RST = '1' then
-						CA <= "00"
-						CB <= "00"
-						CC <= "00"
-						MC <= "00"
+						CA <= "00";
+						CB <= "00";
+						CC <= "00";
+						MC <= "00";
 					end if ;
 				end if ;
 			elsif Pin(i) = M2(i) AND SET = '1' then
-			CB = CB + '1';
-			MC = MC + '1';
+			CB <= CB + '1';
+			MC <= MC + '1';
 				if rising_edge(clk) then
 					if RST = '1' then
-						CA <= "00"
-						CB <= "00"
-						CC <= "00"
-						MC <= "00"
+						CA <= "00";
+						CB <= "00";
+						CC <= "00";
+						MC <= "00";
 					end if ;
 				end if ;
 			elsif Pin(i) = M3(i) AND SET = '1' then
-			CC = CC + '1';
-			MC = MC + '1';
+			CC <= CC + '1';
+			MC <= MC + '1';
 				if rising_edge(clk) then
 					if RST = '1' then
-						CA <= "00"
-						CB <= "00"
-						CC <= "00"
-						MC <= "00"
+						CA <= "00";
+						CB <= "00";
+						CC <= "00";
+						MC <= "00";
 					end if ;
 				end if ;
 			else
-			MC = MC + '1';
+			MC <= MC + '1';
 				if rising_edge(clk) then
 					if RST = '1' then
-						CA <= "00"
-						CB <= "00"
-						CC <= "00"
-						MC <= "00"
+						CA <= "00";
+						CB <= "00";
+						CC <= "00";
+						MC <= "00";
 					end if ;
 				end if ;
 			end if ;
-		end generate;
+		end generate comp;
 
-	if MC = "11" AND CA = "11" then
-		A <= '1'
-	elsif MC = "11" AND CB = "11" then
-		B <= '1'
-	elsif MC = "11" AND CC = "11" then
-		C <= '1'
-	else
-	A <= '1'
-	B <= '1'	
-	C <= '1'
-	end if;
+		if MC = "11" AND CA = "11" then
+			A <= '1';
+		elsif MC = "11" AND CB = "11" then
+			B <= '1';
+		elsif MC = "11" AND CC = "11" then
+			C <= '1';
+		else
+		A <= '1';
+		B <= '1';	
+		C <= '1';
+		end if;
     end process;
-end cont;
